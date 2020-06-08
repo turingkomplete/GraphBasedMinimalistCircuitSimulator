@@ -10,11 +10,11 @@ public class Link {
     private Boolean value;
     private Node source;
     private List<Node> destinations;
-    private Boolean valid;
+    private Boolean validity;
 
     public Link(Boolean value) {
         id = nextID++;
-        valid = false;
+        validity = false;
         destinations = new ArrayList<>();
 
         this.value = value;
@@ -45,11 +45,11 @@ public class Link {
     }
 
     public Boolean isValid() {
-        return valid;
+        return validity;
     }
 
     public void setValidity(Boolean valid) {
-        this.valid = valid;
+        this.validity = valid;
     }
 
     @Override

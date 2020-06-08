@@ -1,7 +1,7 @@
 package simulator.control;
 
 import simulator.gates.sequential.Clock;
-import simulator.gates.combinational.ExplicitInput;
+import simulator.gates.combinational.Explicit;
 import simulator.network.Link;
 import simulator.network.Node;
 
@@ -25,7 +25,7 @@ public class Circuit implements Runnable {
     }
 
     public void addNode(Node node) {
-        if(node instanceof ExplicitInput || node instanceof Clock) {
+        if(node instanceof Explicit || node instanceof Clock) {
             netList.get(0).add(node);
         }
 
@@ -52,9 +52,9 @@ public class Circuit implements Runnable {
         }
     }
 
-    public Boolean DepthFirstSearch(Node node) {
+    private Boolean DepthFirstSearch(Node node) {
         boolean loopDetected;
-        node.setVisitCondition(true);
+        node.setVisited(true);
 
         for (Link link: node.getOutputs()) {
             for (int i = 0; i < link.getDestinations().size(); ++i) {
@@ -65,21 +65,21 @@ public class Circuit implements Runnable {
                     removed.get(link).add(link.getDestinations().get(i));
                     link.getDestinations().get(i).getInputs().remove(link);
                     link.getDestinations().remove(i);
-                    node.setVisitCondition(false);
+                    node.setVisited(false);
                     return true;
                 }
                 loopDetected = DepthFirstSearch(link.getDestinations().get(i));
                 if (loopDetected) {
-                    node.setVisitCondition(false);
+                    node.setVisited(false);
                     return true;
                 }
             }
         }
-        node.setVisitCondition(false);
+        node.setVisited(false);
         return false;
     }
 
-    public void removeLoop() {
+    private void removeLoop() {
         boolean loopDetected = true;
 
         while (loopDetected) {
@@ -93,14 +93,14 @@ public class Circuit implements Runnable {
         }
     }
 
-    public void initializeNetList() {
+    private void initializeNetList() {
         int level = 0;
         while (netList.size() >= level + 1) {
             initializeLevel(level++);
         }
     }
 
-    public void initializeLevel(int level) {
+    private void initializeLevel(int level) {
         for (Node node: netList.get(level)) {
             for (Link link: node.getOutputs()) {
                 link.setValidity(true);
@@ -131,7 +131,7 @@ public class Circuit implements Runnable {
         }
     }
 
-    public void evaluateNetList() {
+    private void evaluateNetList() {
         for (List<Node> list: netList) {
             for (Node node : list) {
                 node.evaluate();

@@ -13,8 +13,8 @@ public class And extends Node {
     public void evaluate() {
         boolean result = true;
 
-        for (Link l: getInputs()) {
-            result = result && l.getValue();
+        for (Link link: getInputs()) {
+            result = result && link.getValue();
         }
 
         getOutput(0).setValue(result);

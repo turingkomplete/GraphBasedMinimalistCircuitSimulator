@@ -2,8 +2,8 @@ package simulator.gates.combinational;
 
 import simulator.network.Node;
 
-public class ExplicitInput extends Node {
-    public ExplicitInput(String label, Boolean value) {
+public class Explicit extends Node {
+    public Explicit(String label, Boolean value) {
         super(label);
         addOutputLink(value);
     }

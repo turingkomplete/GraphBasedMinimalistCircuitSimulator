@@ -43,17 +43,20 @@ public abstract class Node {
         return getInputs().get(index);
     }
 
-    public void addInput(Link... in) {
-        for (Link link: in)
-            if (!link.getDestinations().contains(this))
+    public void addInput(Link... links) {
+        for (Link link: links) {
+            if (!link.getDestinations().contains(this)) {
                 link.addDestination(this);
-
-        getInputs().addAll(Arrays.asList(in));
+            }
+            if (!getInputs().contains(link)) {
+                getInputs().add(link);
+            }
+        }
     }
 
-    public void setInput(int index, Link in) {
-        in.addDestination(this);
-        getInputs().set(index, in);
+    public void setInput(int index, Link link) {
+        link.addDestination(this);
+        getInputs().set(index, link);
     }
 
     public List<Link> getOutputs() {
@@ -64,19 +67,19 @@ public abstract class Node {
         return getOutputs().get(index);
     }
 
-    public void addOutput(Link... in) {
-        getOutputs().addAll(Arrays.asList(in));
+    public void addOutput(Link... links) {
+        getOutputs().addAll(Arrays.asList(links));
     }
 
-    public void setOutput(int index, Link in) {
-        getOutputs().set(index, in);
+    public void setOutput(int index, Link link) {
+        getOutputs().set(index, link);
     }
 
     public long getId() {
         return id;
     }
 
-    public void setVisitCondition(Boolean state) {
+    public void setVisited(Boolean state) {
         visited = state;
     }
 
