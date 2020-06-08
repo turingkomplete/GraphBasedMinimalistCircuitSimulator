@@ -7,6 +7,7 @@ import simulator.gates.combinational.And;
 import simulator.gates.combinational.ExplicitInput;
 import simulator.gates.sequential.Clock;
 import simulator.gates.sequential.flipflops.DFlipFlop;
+import simulator.procedures.HalfAdder;
 
 public class Main {
 
@@ -19,16 +20,17 @@ public class Main {
 //        a1.addInput(a2.getOutput(0));
 //        a2.addInput(a3.getOutput(0));
 
-        Clock clock = new Clock("Clock", 500);
+//        Clock clock = new Clock("Clock", 500);
+//        DFlipFlop d1 = new DFlipFlop("DFLIPFLOP1", clock.getOutput(0), trueValue.getOutput(0));
+//        DFlipFlop d2 = new DFlipFlop("DFLIPFLOP2", clock.getOutput(0), d1.getOutput(0));
 
-        DFlipFlop d1 = new DFlipFlop("DFLIPFLOP1", clock.getOutput(0), trueValue.getOutput(0));
-        DFlipFlop d2 = new DFlipFlop("DFLIPFLOP2", clock.getOutput(0), d1.getOutput(0));
+        HalfAdder ha = new HalfAdder("HA", trueValue.getOutput(0), trueValue.getOutput(0));
 
         Simulator.circuit.startCircuit();
 
         //debug code
         while (true) {
-            System.out.println(d1.getOutput(0).getValue() + "   " + d2.getOutput(0).getValue());
+            System.out.println(ha.getOutput(0).getValue());
             try {
                 Thread.sleep(0);
             } catch (Exception e) {
