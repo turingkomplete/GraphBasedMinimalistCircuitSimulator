@@ -4,7 +4,7 @@ package simulator;
 
 import simulator.control.Circuit;
 import simulator.control.Simulator;
-import simulator.gates.sequential.flipflops.Clock;
+import simulator.gates.sequential.Clock;
 import simulator.gates.combinational.ExplicitInput;
 import simulator.gates.sequential.flipflops.DFlipFlop;
 

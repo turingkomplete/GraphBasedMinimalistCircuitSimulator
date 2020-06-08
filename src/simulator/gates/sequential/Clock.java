@@ -1,4 +1,4 @@
-package simulator.gates.sequential.flipflops;
+package simulator.gates.sequential;
 
 import simulator.network.Node;
 
