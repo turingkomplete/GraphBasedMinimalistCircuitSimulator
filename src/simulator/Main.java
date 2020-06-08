@@ -9,6 +9,7 @@ import simulator.gates.combinational.Explicit;
 public class Main {
 
     public static void main(String[] args) {
+        //sample code
         Explicit trueValue = new Explicit("TRUE", true);
         Explicit falseValue = new Explicit("FALSE", false);
         And a1 = new And("AND1", trueValue.getOutput(0), trueValue.getOutput(0));
