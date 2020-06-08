@@ -25,7 +25,7 @@ public class Circuit implements Runnable {
     }
 
     public void addNode(Node node) {
-        if(node instanceof ExplicitInput) {
+        if(node instanceof ExplicitInput || node instanceof Clock) {
             netList.get(0).add(node);
         }
 
@@ -142,10 +142,6 @@ public class Circuit implements Runnable {
     @Override
     public void run() {
         while (true) {
-            for (Clock clock: clocks) {
-                clock.evaluate();
-            }
-
             evaluateNetList();
         }
     }

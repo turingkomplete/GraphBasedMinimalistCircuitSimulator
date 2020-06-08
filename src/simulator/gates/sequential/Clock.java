@@ -10,7 +10,6 @@ public class Clock extends Node implements Runnable {
     public Clock(String label, long delay) {
         super(label);
         addOutputLink(false);
-        getOutput(0).setValidity(true);
         state = false;
         this.delay = delay;
         thread = new Thread(this);
