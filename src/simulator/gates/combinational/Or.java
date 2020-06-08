@@ -5,9 +5,8 @@ import simulator.network.Node;
 
 public class Or extends Node {
     public Or(String label, Link... links) {
-        super(label);
+        super(label, links);
         addOutputLink(false);
-        addInput(links);
     }
 
     @Override

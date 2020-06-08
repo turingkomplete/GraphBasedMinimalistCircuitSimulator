@@ -15,13 +15,14 @@ public abstract class Node {
     protected String label;
     protected Boolean visited;
 
-    public Node(String label) {
+    public Node(String label, Link... links) {
         id = nextID++;
         inputs = new ArrayList<>();
         outputs = new ArrayList<>();
         visited = false;
 
         this.label = label;
+        addInput(links);
 
         Simulator.circuit.addNode(this);
     }

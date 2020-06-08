@@ -5,9 +5,8 @@ import simulator.network.Node;
 
 public class And extends Node {
     public And(String label, Link... links) {
-        super(label);
+        super(label, links);
         addOutputLink(false);
-        addInput(links);
     }
 
     @Override

@@ -8,11 +8,10 @@ public class DFlipFlop extends Node implements FlipFlop {
     private Boolean edgeFlag;
 
     public DFlipFlop(String label, Link... links) {
-        super(label);
+        super(label, links);
         edgeFlag = true;
         memory = false;
         addOutputLink(false);
-        addInput(links);
     }
 
     @Override

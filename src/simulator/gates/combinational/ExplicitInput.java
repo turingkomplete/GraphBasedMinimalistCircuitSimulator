@@ -9,7 +9,7 @@ public class ExplicitInput extends Node {
     }
 
     @Override
-    public void evaluate() {
+    public final void evaluate() {
         //do nothing
     }
 }
