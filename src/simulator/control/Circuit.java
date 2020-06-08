@@ -25,11 +25,13 @@ public class Circuit implements Runnable {
     }
 
     public void addNode(Node node) {
-        if(node instanceof ExplicitInput)
+        if(node instanceof ExplicitInput) {
             netList.get(0).add(node);
+        }
 
-        if (node instanceof Clock)
+        if (node instanceof Clock) {
             clocks.add((Clock) node);
+        }
     }
 
     public void startCircuit() {
@@ -130,16 +132,19 @@ public class Circuit implements Runnable {
     }
 
     public void evaluateNetList() {
-        for (List<Node> list: netList)
-            for (Node node: list)
+        for (List<Node> list: netList) {
+            for (Node node : list) {
                 node.evaluate();
+            }
+        }
     }
 
     @Override
     public void run() {
         while (true) {
-            for (Clock clock: clocks)
+            for (Clock clock: clocks) {
                 clock.evaluate();
+            }
 
             evaluateNetList();
         }
