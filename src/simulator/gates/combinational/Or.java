@@ -3,8 +3,8 @@ package simulator.gates.combinational;
 import simulator.network.Link;
 import simulator.network.Node;
 
-public class And extends Node {
-    public And(String label, Link... links) {
+public class Or extends Node {
+    public Or(String label, Link... links) {
         super(label);
         addOutputLink(false);
         addInput(links);
@@ -12,10 +12,10 @@ public class And extends Node {
 
     @Override
     public void evaluate() {
-        boolean result = true;
+        boolean result = false;
 
         for (Link l: getInputs()) {
-            result = result && l.getValue();
+            result = result || l.getValue();
         }
 
         getOutput(0).setValue(result);
