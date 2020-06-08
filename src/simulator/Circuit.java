@@ -8,7 +8,7 @@ import java.util.Map;
 public class Circuit {
     private static List<Link> allLinks = new ArrayList<>();
     private static List<Node> allNodes = new ArrayList<>();
-    private static List<Node> clocks = new ArrayList<>();
+    private static List<Clock> clocks = new ArrayList<>();
     private static List<List<Node>> netList = new ArrayList<>();
     private static Map<Link, List<Node>> removed = new HashMap<>();
 
@@ -21,7 +21,7 @@ public class Circuit {
         }
 
         if (node instanceof Clock) {
-            clocks.add(node);
+            clocks.add((Clock) node);
         }
 
         allNodes.add(node);
