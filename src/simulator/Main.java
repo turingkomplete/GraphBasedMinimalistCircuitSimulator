@@ -2,7 +2,6 @@
 
 package simulator;
 
-import simulator.control.Circuit;
 import simulator.control.Simulator;
 import simulator.gates.sequential.Clock;
 import simulator.gates.combinational.ExplicitInput;
