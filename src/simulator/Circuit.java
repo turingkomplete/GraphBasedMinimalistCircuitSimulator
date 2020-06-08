@@ -5,18 +5,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Circuit {
-    private static List<Link> allLinks = new ArrayList<>();
-    private static List<Node> allNodes = new ArrayList<>();
-    private static List<Clock> clocks = new ArrayList<>();
-    private static List<List<Node>> netList = new ArrayList<>();
-    private static Map<Link, List<Node>> removed = new HashMap<>();
+public class Circuit implements Runnable {
+    private List<Link> allLinks;
+    private List<Node> allNodes;
+    private List<Clock> clocks;
+    private List<List<Node>> netList;
+    private Map<Link, List<Node>> removed;
+    private Thread thread;
 
-    public static void addNode(Node node) {
+    public Circuit() {
+        removed = new HashMap<>();
+        netList = new ArrayList<>();
+        netList.add(new ArrayList<>());
+        allLinks = new ArrayList<>();
+        allNodes = new ArrayList<>();
+        clocks = new ArrayList<>();
+        thread = new Thread(this);
+    }
+
+    public void addNode(Node node) {
         if(node instanceof ExplicitInput) {
-            if (netList.size() == 0) {
-                netList.add(new ArrayList<>());
-            }
             netList.get(0).add(node);
         }
 
@@ -27,14 +35,17 @@ public class Circuit {
         allNodes.add(node);
     }
 
-    public static void start() {
-        deleteLoop();
+    public void startCircuit() {
+        removeLoop();
         initializeNetList();
         addLoop();
-        evaluateNetList();
+        for (Clock clock: clocks) {
+            clock.startThread();
+        }
+        thread.start();
     }
 
-    private static void addLoop() {
+    private void addLoop() {
         for (Link link: removed.keySet()) {
             for (Node node: removed.get(link)) {
                 link.addDestination(node);
@@ -43,7 +54,7 @@ public class Circuit {
         }
     }
 
-    public static Boolean DepthFirstSearch(Node node) {
+    public Boolean DepthFirstSearch(Node node) {
         boolean loopDetected;
         node.setVisitCondition(true);
 
@@ -70,7 +81,7 @@ public class Circuit {
         return false;
     }
 
-    public static void deleteLoop() {
+    public void removeLoop() {
         boolean loopDetected = true;
 
         while (loopDetected) {
@@ -81,14 +92,14 @@ public class Circuit {
         }
     }
 
-    public static void initializeNetList() {
+    public void initializeNetList() {
         int level = 0;
         while (netList.size() >= level + 1) {
             initializeLevel(level++);
         }
     }
 
-    public static void initializeLevel(int level) {
+    public void initializeLevel(int level) {
         for (Node node: netList.get(level)) {
             for (Link link: node.getOutputs()) {
                 link.setValidity(true);
@@ -119,11 +130,21 @@ public class Circuit {
         }
     }
 
-    public static void evaluateNetList() {
+    public void evaluateNetList() {
         for (List<Node> list: netList) {
             for (Node node: list) {
                 node.evaluate();
             }
+        }
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            for (Clock clock: clocks) {
+                clock.evaluate();
+            }
+            evaluateNetList();
         }
     }
 }
