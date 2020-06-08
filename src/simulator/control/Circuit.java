@@ -38,9 +38,14 @@ public class Circuit implements Runnable {
         removeLoop();
         initializeNetList();
         addLoop();
-        for (Clock clock: clocks)
-            clock.startThread();
+        startClocks();
         thread.start();
+    }
+
+    private void startClocks() {
+        for (Clock clock: clocks) {
+            clock.startThread();
+        }
     }
 
     private void addLoop() {
