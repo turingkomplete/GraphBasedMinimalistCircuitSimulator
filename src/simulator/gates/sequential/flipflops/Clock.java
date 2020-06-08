@@ -1,4 +1,6 @@
-package simulator;
+package simulator.gates.sequential.flipflops;
+
+import simulator.network.Node;
 
 public class Clock extends Node implements Runnable {
     private Thread thread;

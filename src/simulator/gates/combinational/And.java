@@ -1,4 +1,7 @@
-package simulator;
+package simulator.gates.combinational;
+
+import simulator.network.Link;
+import simulator.network.Node;
 
 public class And extends Node {
     public And(String label, Link... links) {

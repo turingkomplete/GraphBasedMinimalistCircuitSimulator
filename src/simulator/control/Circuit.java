@@ -1,4 +1,9 @@
-package simulator;
+package simulator.control;
+
+import simulator.gates.sequential.flipflops.Clock;
+import simulator.gates.combinational.ExplicitInput;
+import simulator.network.Link;
+import simulator.network.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;

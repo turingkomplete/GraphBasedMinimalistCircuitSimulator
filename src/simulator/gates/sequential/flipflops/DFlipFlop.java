@@ -1,4 +1,7 @@
-package simulator;
+package simulator.gates.sequential.flipflops;
+
+import simulator.network.Link;
+import simulator.network.Node;
 
 public class DFlipFlop extends Node implements FlipFlop {
     private Boolean memory;

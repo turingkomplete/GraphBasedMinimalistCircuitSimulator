@@ -1,4 +1,6 @@
-package simulator;
+package simulator.network;
+
+import simulator.control.Simulator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

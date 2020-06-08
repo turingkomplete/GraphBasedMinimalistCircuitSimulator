@@ -2,6 +2,12 @@
 
 package simulator;
 
+import simulator.control.Circuit;
+import simulator.control.Simulator;
+import simulator.gates.sequential.flipflops.Clock;
+import simulator.gates.combinational.ExplicitInput;
+import simulator.gates.sequential.flipflops.DFlipFlop;
+
 public class Main {
 
     public static void main(String[] args) {

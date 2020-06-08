@@ -1,4 +1,4 @@
-package simulator;
+package simulator.gates.sequential.flipflops;
 
 public interface FlipFlop {
     void setOutput();
