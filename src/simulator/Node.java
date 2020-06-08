@@ -21,7 +21,7 @@ public abstract class Node {
 
         this.label = label;
 
-        Simulator.circuit.addNode(this);
+        Circuit.addNode(this);
     }
 
     public abstract void evaluate();

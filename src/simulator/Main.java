@@ -1,3 +1,5 @@
+//Dedicated to Goli
+
 package simulator;
 
 public class Main {
@@ -10,7 +12,7 @@ public class Main {
         And a2 = new And("AND2", a1.getOutput(0), trueBit.getOutput(0));
         //a1.addInput(a2.getOutput(0));
 
-        Simulator.circuit.start();
+        Circuit.start();
 
         System.out.println(a1.getOutput(0).getValue() + " " + a2.getOutput(0).getValue());
     }
