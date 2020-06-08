@@ -2,12 +2,9 @@
 
 package simulator;
 
-import simulator.control.Circuit;
 import simulator.control.Simulator;
 import simulator.gates.combinational.And;
-import simulator.gates.sequential.Clock;
 import simulator.gates.combinational.ExplicitInput;
-import simulator.gates.sequential.flipflops.DFlipFlop;
 
 public class Main {
 
@@ -17,7 +14,8 @@ public class Main {
         And a1 = new And("AND1", trueValue.getOutput(0), trueValue.getOutput(0));
         And a2 = new And("AND2", trueValue.getOutput(0), a1.getOutput(0));
         And a3 = new And("AND3", trueValue.getOutput(0), a2.getOutput(0));
-        a1.addInput(a3.getOutput(0));
+        a1.addInput(a2.getOutput(0));
+        a2.addInput(a3.getOutput(0));
 
         Simulator.circuit.startCircuit();
 
