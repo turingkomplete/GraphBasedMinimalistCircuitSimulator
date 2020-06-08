@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Circuit implements Runnable {
-    private List<Link> allLinks;
-    private List<Node> allNodes;
     private List<Clock> clocks;
     private List<List<Node>> netList;
     private Map<Link, List<Node>> removed;
@@ -17,8 +15,6 @@ public class Circuit implements Runnable {
         removed = new HashMap<>();
         netList = new ArrayList<>();
         netList.add(new ArrayList<>());
-        allLinks = new ArrayList<>();
-        allNodes = new ArrayList<>();
         clocks = new ArrayList<>();
         thread = new Thread(this);
     }
@@ -31,8 +27,6 @@ public class Circuit implements Runnable {
         if (node instanceof Clock) {
             clocks.add((Clock) node);
         }
-
-        allNodes.add(node);
     }
 
     public void startCircuit() {
