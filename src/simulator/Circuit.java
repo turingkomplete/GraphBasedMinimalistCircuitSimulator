@@ -20,22 +20,19 @@ public class Circuit implements Runnable {
     }
 
     public void addNode(Node node) {
-        if(node instanceof ExplicitInput) {
+        if(node instanceof ExplicitInput)
             netList.get(0).add(node);
-        }
 
-        if (node instanceof Clock) {
+        if (node instanceof Clock)
             clocks.add((Clock) node);
-        }
     }
 
     public void startCircuit() {
         removeLoop();
         initializeNetList();
         addLoop();
-        for (Clock clock: clocks) {
+        for (Clock clock: clocks)
             clock.startThread();
-        }
         thread.start();
     }
 
@@ -135,9 +132,9 @@ public class Circuit implements Runnable {
     @Override
     public void run() {
         while (true) {
-            for (Clock clock: clocks) {
+            for (Clock clock: clocks)
                 clock.evaluate();
-            }
+
             evaluateNetList();
         }
     }
