@@ -27,6 +27,7 @@ public class Main {
                     a2.getOutput(0).getValue() + "   " +
                     a3.getOutput(0).getValue()
             );
+
             try {
                 Thread.sleep(0);
             } catch (Exception e) {
