@@ -122,11 +122,9 @@ public class Circuit implements Runnable {
     }
 
     public void evaluateNetList() {
-        for (List<Node> list: netList) {
-            for (Node node: list) {
+        for (List<Node> list: netList)
+            for (Node node: list)
                 node.evaluate();
-            }
-        }
     }
 
     @Override
