@@ -85,6 +85,7 @@ public class Circuit implements Runnable {
             for (Node node: netList.get(0)) {
                 if (DepthFirstSearch(node)) {
                     loopDetected = true;
+                    break;
                 }
             }
         }
