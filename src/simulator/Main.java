@@ -19,7 +19,7 @@ public class Main {
         Circuit c = Simulator.circuit;
 
         Clock clock = new Clock("CLOCK", 1000);
-        DFlipFlop dFlipFlop1 = new DFlipFlop("", clock.getOutput(0), new Bit("", true).getOutput(0));
+        DFlipFlop dFlipFlop1 = new DFlipFlop("", clock.getOutput(0), new ExplicitInput("", true).getOutput(0));
         DFlipFlop dFlipFlop2 = new DFlipFlop("", clock.getOutput(0), dFlipFlop1.getOutput(0));
 
         Simulator.circuit.startCircuit();
