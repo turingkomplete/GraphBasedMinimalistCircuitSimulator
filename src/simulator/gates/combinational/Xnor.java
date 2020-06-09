@@ -13,11 +13,11 @@ public class Xnor extends Node {
     public void evaluate() {
         int ones = 0;
         for (Link link: getInputs()) {
-            if (link.getValue()) {
+            if (link.getSignal()) {
                 ones++;
             }
         }
 
-        getOutput(0).setValue(ones % 2 == 0);
+        getOutput(0).setSignal(ones % 2 == 0);
     }
 }

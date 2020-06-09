@@ -16,21 +16,21 @@ public class DFlipFlop extends Node implements FlipFlop {
 
     @Override
     public void setOutput() {
-        outputs.get(0).setValue(memory);
+        outputs.get(0).setSignal(memory);
     }
 
     @Override
     public void loadMemory() {
-        memory = getInput(1).getValue();
+        memory = getInput(1).getSignal();
     }
 
     @Override
     public void evaluate() {
-        if(getInput(0).getValue() && edgeFlag) {
+        if(getInput(0).getSignal() && edgeFlag) {
             setOutput();
             loadMemory();
             edgeFlag = false;
-        } else if(!getInput(0).getValue() && !edgeFlag) {
+        } else if(!getInput(0).getSignal() && !edgeFlag) {
             edgeFlag = true;
         }
     }

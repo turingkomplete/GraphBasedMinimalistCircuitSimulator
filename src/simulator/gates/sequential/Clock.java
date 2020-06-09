@@ -21,7 +21,7 @@ public class Clock extends Node implements Runnable {
 
     @Override
     public void evaluate() {
-        getOutput(0).setValue(state);
+        getOutput(0).setSignal(state);
     }
 
     @Override

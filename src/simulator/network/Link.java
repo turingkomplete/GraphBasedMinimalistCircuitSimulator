@@ -7,25 +7,25 @@ import java.util.List;
 public class Link {
     private static long nextID = 0;
     private Long id;
-    private Boolean value;
+    private Boolean signal;
     private Node source;
     private List<Node> destinations;
     private Boolean validity;
 
-    public Link(Boolean value) {
+    public Link(Boolean signal) {
         id = nextID++;
         validity = false;
         destinations = new ArrayList<>();
 
-        this.value = value;
+        this.signal = signal;
     }
 
-    public Boolean getValue() {
-        return value;
+    public Boolean getSignal() {
+        return signal;
     }
 
-    public void setValue(Boolean value) {
-        this.value = value;
+    public void setSignal(Boolean signal) {
+        this.signal = signal;
     }
 
     public Node getSource() {

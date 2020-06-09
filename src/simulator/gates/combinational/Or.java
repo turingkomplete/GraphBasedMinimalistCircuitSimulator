@@ -14,9 +14,9 @@ public class Or extends Node {
         boolean result = false;
 
         for (Link link: getInputs()) {
-            result = result || link.getValue();
+            result = result || link.getSignal();
         }
 
-        getOutput(0).setValue(result);
+        getOutput(0).setSignal(result);
     }
 }

@@ -38,7 +38,7 @@ public class Debugger implements Runnable {
             for (Node node : trackList) {
                 System.out.print(node.getLabel() + "[" + node.getId() + "]" + ": ");
                 for (Link link : node.getOutputs()) {
-                    System.out.print(link.getValue() + " ");
+                    System.out.print(link.getSignal() + " ");
                 }
                 System.out.println();
             }

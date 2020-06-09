@@ -23,7 +23,7 @@ public class Not extends Node {
     @Override
     public void evaluate() {
         for (int i = 0; i < getInputs().size(); ++i) {
-            getOutput(i).setValue(!getInput(i).getValue());
+            getOutput(i).setSignal(!getInput(i).getSignal());
         }
     }
 }
