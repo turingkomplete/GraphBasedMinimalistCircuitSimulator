@@ -15,7 +15,7 @@ public class Clock extends Node implements Runnable {
         thread = new Thread(this);
     }
 
-    public void startThread() {
+    public void startClock() {
         thread.start();
     }
 

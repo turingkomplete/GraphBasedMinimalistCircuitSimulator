@@ -45,12 +45,8 @@ public abstract class Node {
 
     public void addInput(Link... links) {
         for (Link link: links) {
-            if (!link.getDestinations().contains(this)) {
                 link.addDestination(this);
-            }
-            if (!getInputs().contains(link)) {
                 getInputs().add(link);
-            }
         }
     }
 
@@ -77,6 +73,14 @@ public abstract class Node {
 
     public long getId() {
         return id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public void setVisited(Boolean state) {

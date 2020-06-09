@@ -44,7 +44,7 @@ public class Circuit implements Runnable {
 
     private void startClocks() {
         for (Clock clock: clocks) {
-            clock.startThread();
+            clock.startClock();
         }
     }
 
