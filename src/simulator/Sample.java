@@ -8,7 +8,6 @@ import simulator.gates.sequential.flipflops.JKFlipFlop;
 import simulator.procedures.FullAdder;
 
 public class Sample {
-
     public static void main(String[] args) {
         //sample circuit
         Clock ck1 = new Clock("CK1", 1000);
