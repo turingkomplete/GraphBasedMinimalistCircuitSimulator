@@ -1,10 +1,10 @@
-package simulator.procedures;
+package simulator.wrappers;
 
 import simulator.gates.combinational.And;
 import simulator.gates.combinational.Xor;
 import simulator.network.Link;
 
-public class HalfAdder extends Procedure {
+public class HalfAdder extends Wrapper {
     public HalfAdder(String label, Link... links) {
         super(label, links);
     }

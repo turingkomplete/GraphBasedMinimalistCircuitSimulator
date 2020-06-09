@@ -1,13 +1,14 @@
 package simulator.control;
 
 import simulator.network.Link;
+import simulator.network.Linkable;
 import simulator.network.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Debugger implements Runnable {
-    private List<Node> trackList;
+    private List<Linkable> trackList;
     private long delay;
     private Thread thread;
 
@@ -25,19 +26,19 @@ public class Debugger implements Runnable {
         this.delay = delay;
     }
 
-    public void addTrackItem(Node... trackList) {
-        for (Node node : trackList) {
-            if (!this.trackList.contains(node)) {
-                this.trackList.add(node);
+    public void addTrackItem(Linkable... trackList) {
+        for (Linkable linkable : trackList) {
+            if (!this.trackList.contains(linkable)) {
+                this.trackList.add(linkable);
             }
         }
     }
 
     public void printState() {
         if (!trackList.isEmpty()) {
-            for (Node node : trackList) {
-                System.out.print(node.getLabel() + "[" + node.getId() + "]" + ": ");
-                for (Link link : node.getOutputs()) {
+            for (Linkable linkable : trackList) {
+                System.out.print(linkable.getLabel() + "[" + linkable.getId() + "]" + ": ");
+                for (Link link : linkable.getOutputs()) {
                     System.out.print(link.getSignal() + " ");
                 }
                 System.out.println();

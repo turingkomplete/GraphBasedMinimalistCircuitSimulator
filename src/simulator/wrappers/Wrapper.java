@@ -1,39 +1,31 @@
-package simulator.network;
+package simulator.wrappers;
 
-import simulator.control.Simulator;
+import simulator.network.Link;
+import simulator.network.Linkable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Node implements Linkable{
+public abstract class Wrapper implements Linkable {
     private static long nextID = 0;
 
     protected long id;
     protected List<Link> inputs;
     protected List<Link> outputs;
     protected String label;
-    protected Boolean visited;
 
-    public Node(String label, Link... links) {
+    public Wrapper(String label, Link... links) {
         id = nextID++;
         inputs = new ArrayList<>();
         outputs = new ArrayList<>();
-        visited = false;
 
         this.label = label;
         addInput(links);
-
-        Simulator.circuit.addNode(this);
+        initialize();
     }
 
-    public abstract void evaluate();
-
-    public void addOutputLink(Boolean value) {
-        Link link = new Link(value);
-        link.setSource(this);
-        addOutput(link);
-    }
+    public abstract void initialize();
 
     public List<Link> getInputs() {
         return inputs;
@@ -46,15 +38,11 @@ public abstract class Node implements Linkable{
 
     @Override
     public void addInput(Link... links) {
-        for (Link link: links) {
-                link.addDestination(this);
-                getInputs().add(link);
-        }
+        getInputs().addAll(Arrays.asList(links));
     }
 
     @Override
     public void setInput(int index, Link link) {
-        link.addDestination(this);
         getInputs().set(index, link);
     }
 
@@ -86,28 +74,5 @@ public abstract class Node implements Linkable{
     @Override
     public String getLabel() {
         return label;
-    }
-
-    public void setVisited(Boolean state) {
-        visited = state;
-    }
-
-    public Boolean isVisited() {
-        return visited;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Node node = (Node) o;
-
-        return id == node.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return (int) (id ^ (id >>> 32));
     }
 }

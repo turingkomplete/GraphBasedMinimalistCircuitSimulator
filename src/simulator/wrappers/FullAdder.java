@@ -1,9 +1,9 @@
-package simulator.procedures;
+package simulator.wrappers;
 
 import simulator.gates.combinational.Or;
 import simulator.network.Link;
 
-public class FullAdder extends Procedure {
+public class FullAdder extends Wrapper {
     public FullAdder(String label, Link... links) {
         super(label, links);
     }

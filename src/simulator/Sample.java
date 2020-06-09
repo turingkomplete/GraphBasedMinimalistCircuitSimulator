@@ -5,7 +5,7 @@ package simulator;
 import simulator.control.Simulator;
 import simulator.gates.sequential.Clock;
 import simulator.gates.sequential.flipflops.JKFlipFlop;
-import simulator.procedures.FullAdder;
+import simulator.wrappers.FullAdder;
 
 public class Sample {
     public static void main(String[] args) {
