@@ -30,7 +30,7 @@ public class JKFlipFlop extends Node implements FlipFlop {
             memory = true;
         } else if (!j && k) {
             memory = false;
-        } else if (j) {
+        } else if (j && k) {
             memory = !memory;
         }
     }
