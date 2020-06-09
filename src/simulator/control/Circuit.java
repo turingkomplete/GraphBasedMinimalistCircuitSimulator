@@ -51,7 +51,6 @@ public class Circuit implements Runnable {
     private void addLoop() {
         for (Link link: removed.keySet()) {
             for (Node node: removed.get(link)) {
-                link.addDestination(node);
                 node.addInput(link);
             }
         }
