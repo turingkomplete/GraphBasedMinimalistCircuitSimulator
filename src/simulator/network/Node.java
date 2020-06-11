@@ -35,6 +35,7 @@ public abstract class Node implements Linkable{
         addOutput(link);
     }
 
+    @Override
     public List<Link> getInputs() {
         return inputs;
     }
