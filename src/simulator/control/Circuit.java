@@ -34,9 +34,13 @@ public class Circuit implements Runnable {
         }
     }
 
-    public void startCircuit() {
+    public void startCircuit(String mode) {
         removeLoop();
-        initializeNetList();
+        if (mode.equals("REAL") || mode.equals("Real") || mode.equals("real")) {
+            realModeInitializeNetList();
+        } else {
+            initializeNetList();
+        }
         addLoop();
         startClocks();
         thread.start();
@@ -129,6 +133,29 @@ public class Circuit implements Runnable {
                         if (!netList.get(level + 1).contains(innerNode)) {
                             netList.get(level + 1).add(innerNode);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private void realModeInitializeNetList() {
+        int level = 0;
+        while (netList.size() >= level + 1) {
+            realModeInitializeLevel(level++);
+        }
+    }
+
+    private void realModeInitializeLevel(int level) {
+        for (Node node: netList.get(level)) {
+            for (Link link: node.getOutputs()) {
+                for (Node innerNode : link.getDestinations()) {
+                    if (netList.size() < level + 2) {
+                        netList.add(new ArrayList<>());
+                    }
+
+                    if (!netList.get(level + 1).contains(innerNode)) {
+                        netList.get(level + 1).add(innerNode);
                     }
                 }
             }

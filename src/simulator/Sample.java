@@ -32,7 +32,7 @@ public class Sample {
         xor.addInput(nand5.getOutput(0), Simulator.trueLogic);
 
 
-        Simulator.circuit.startCircuit();
+        Simulator.circuit.startCircuit("REAL");
 
         Simulator.debugger.addTrackItem(nand5);
         Simulator.debugger.startDebugger();
