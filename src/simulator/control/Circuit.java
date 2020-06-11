@@ -56,7 +56,7 @@ public class Circuit implements Runnable {
         }
     }
 
-    private Boolean DepthFirstSearch(Node node) {
+    private Boolean depthFirstSearch(Node node) {
         boolean loopDetected;
         node.setVisited(true);
 
@@ -72,7 +72,7 @@ public class Circuit implements Runnable {
                     node.setVisited(false);
                     return true;
                 }
-                loopDetected = DepthFirstSearch(link.getDestinations().get(i));
+                loopDetected = depthFirstSearch(link.getDestinations().get(i));
                 if (loopDetected) {
                     node.setVisited(false);
                     return true;
@@ -89,7 +89,7 @@ public class Circuit implements Runnable {
         while (loopDetected) {
             loopDetected = false;
             for (Node node: netList.get(0)) {
-                if (DepthFirstSearch(node)) {
+                if (depthFirstSearch(node)) {
                     loopDetected = true;
                     break;
                 }
