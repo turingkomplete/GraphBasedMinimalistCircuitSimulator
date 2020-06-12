@@ -16,7 +16,7 @@ public class Memory extends Node {
 
     private int address() {
         int temp = 0;
-        for (int i = 1; i <= 16; ++i) {
+        for (int i = 1; i < 17; ++i) {
             if(inputs.size() > i) {
                 if(getInput(i).getSignal()) {
                     temp += Math.pow(2, 16 - i);
@@ -27,7 +27,7 @@ public class Memory extends Node {
     }
 
     private void memoryWrite() {
-        for(int i = 17; i <= 48; ++i) {
+        for(int i = 17; i < 49; ++i) {
             memory[address() + i - 17] = getInput(i).getSignal();
         }
     }
@@ -40,12 +40,10 @@ public class Memory extends Node {
 
     @Override
     public void evaluate() {
-        if(getInputs().size() >= 49) {
-            if (getInput(0).getSignal()) {
-                memoryWrite();
-            } else {
-                memoryRead();
-            }
+        if (getInput(0).getSignal()) {
+            memoryWrite();
+        } else {
+            memoryRead();
         }
     }
 }

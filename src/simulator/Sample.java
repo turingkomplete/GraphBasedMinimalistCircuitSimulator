@@ -4,7 +4,6 @@ package simulator;
 
 import simulator.control.Simulator;
 import simulator.wrapper.wrappers.FullAdder;
-import simulator.wrapper.wrappers.HalfAdder;
 
 public class Sample {
     public static void main(String[] args) {
