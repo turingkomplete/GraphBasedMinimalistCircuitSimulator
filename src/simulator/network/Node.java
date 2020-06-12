@@ -109,6 +109,8 @@ public abstract class Node implements Linkable{
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        int result = 11;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        return result;
     }
 }
