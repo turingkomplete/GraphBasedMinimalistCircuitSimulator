@@ -2,24 +2,25 @@ package simulator.control;
 
 import simulator.network.Link;
 import simulator.network.Linkable;
-import simulator.network.Node;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class Debugger implements Runnable {
+public class Debugger {
     private List<Linkable> trackList;
+    private Date startTime;
     private long delay;
-    private Thread thread;
+    private boolean edgeFlag;
 
     public Debugger(long delay) {
         this.delay = delay;
         trackList = new ArrayList<>();
-        thread = new Thread(this);
+        edgeFlag = true;
     }
 
     public void startDebugger() {
-        thread.start();
+        startTime = new Date();
     }
 
     public void setDelay(long delay) {
@@ -47,18 +48,17 @@ public class Debugger implements Runnable {
         }
     }
 
-    @Override
     public void run() {
-        while (true) {
+        Date currentTime = new Date();
+        long spent = startTime.getTime() - currentTime.getTime();
+
+        if ((spent / delay) % 2 == 0 && edgeFlag) {
             if (!trackList.isEmpty()) {
                 printState();
-
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
+            edgeFlag = false;
+        } else if ((spent / delay) % 2 != 0 && !edgeFlag) {
+            edgeFlag = true;
         }
     }
 }

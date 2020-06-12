@@ -43,6 +43,7 @@ public class Circuit implements Runnable {
         }
         addLoop();
         startClocks();
+        Simulator.debugger.startDebugger();
         thread.start();
     }
 
@@ -174,6 +175,7 @@ public class Circuit implements Runnable {
     public void run() {
         while (true) {
             evaluateNetList();
+            Simulator.debugger.run();
         }
     }
 }
