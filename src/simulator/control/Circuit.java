@@ -47,6 +47,15 @@ public class Circuit implements Runnable {
         thread.start();
     }
 
+    public void startCircuit() {
+        removeLoop();
+        initializeNetList();
+        addLoop();
+        startClocks();
+        Simulator.debugger.startDebugger();
+        thread.start();
+    }
+
     private void startClocks() {
         for (Clock clock: clocks) {
             clock.startClock();

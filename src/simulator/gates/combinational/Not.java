@@ -6,9 +6,6 @@ import simulator.network.Node;
 public class Not extends Node {
     public Not(String label, Link... links) {
         super(label, links);
-        for (int i = 0; i < links.length; ++i) {
-            addOutputLink(false);
-        }
     }
 
     @Override

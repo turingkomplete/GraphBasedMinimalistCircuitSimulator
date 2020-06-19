@@ -11,10 +11,10 @@ public class FullAdder extends Wrapper {
 
     @Override
     public void initialize() {
-        HalfAdder halfAdder1 = new HalfAdder("HALFADDER1", "2X2", getInput(0), getInput(1));
-        HalfAdder halfAdder2 = new HalfAdder("HALFADDER2", "2X2", halfAdder1.getOutput(1), getInput(2));
-        Or or1 = new Or("OR1", halfAdder1.getOutput(0), halfAdder2.getOutput(0));
+        HalfAdder ha1 = new HalfAdder("HALFADDER1", "2X2", getInput(0), getInput(1));
+        HalfAdder ha2 = new HalfAdder("HALFADDER2", "2X2", ha1.getOutput(1), getInput(2));
+        Or or1 = new Or("OR1", ha2.getOutput(0), ha1.getOutput(0));
 
-        addOutput(or1.getOutput(0), halfAdder2.getOutput(1));
+        addOutput(or1.getOutput(0), ha2.getOutput(1));
     }
 }
