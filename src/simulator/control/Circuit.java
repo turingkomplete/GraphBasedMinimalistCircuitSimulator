@@ -126,8 +126,7 @@ public class Circuit implements Runnable {
                         continue outer;
                     }
 
-                    stack.peek().j++;
-                    stack.push(new StackFrame(thisNode.getOutput(stack.peek().i).getDestination(--stack.peek().j)));
+                    stack.push(new StackFrame(thisNode.getOutput(stack.peek().i).getDestination(stack.peek().j)));
                     continue outer;
                 }
 
