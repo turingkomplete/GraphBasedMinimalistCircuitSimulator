@@ -8,9 +8,9 @@ public class StackFrame {
     public int j;
     public Node node;
 
-    public StackFrame(Node node, int i, int j) {
-        this.i = i;
-        this.j = j;
+    public StackFrame(Node node) {
+        this.i = 0;
+        this.j = 0;
         this.node = node;
     }
 

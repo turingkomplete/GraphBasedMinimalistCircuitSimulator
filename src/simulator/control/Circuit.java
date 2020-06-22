@@ -96,7 +96,7 @@ public class Circuit implements Runnable {
 
     private Boolean depthFirstSearch(Node node) {
         Stack<StackFrame> stack = new Stack<>();
-        stack.push(new StackFrame(node, 0, 0));
+        stack.push(new StackFrame(node));
         StackFrame.returnValue = false;
 
         outer: while (stack.size() > 0) {
@@ -127,11 +127,12 @@ public class Circuit implements Runnable {
                     }
 
                     stack.peek().j++;
-                    stack.push(new StackFrame(thisNode.getOutput(stack.peek().i).getDestination(--stack.peek().j), 0, 0));
+                    stack.push(new StackFrame(thisNode.getOutput(stack.peek().i).getDestination(--stack.peek().j)));
                     continue outer;
                 }
 
                 stack.peek().i++;
+                stack.peek().j = 0;
             }
 
             thisNode.setVisited(false);
