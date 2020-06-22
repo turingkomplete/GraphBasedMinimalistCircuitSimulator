@@ -46,4 +46,12 @@ public class Memory extends Node {
             memoryRead();
         }
     }
+
+    public void setMemory(Boolean[] memory) {
+        this.memory = memory;
+    }
+
+    public Boolean[] getMemory() {
+        return memory;
+    }
 }
