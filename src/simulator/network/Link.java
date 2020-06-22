@@ -40,6 +40,10 @@ public class Link {
         return destinations;
     }
 
+    public Node getDestination(int index) {
+        return getDestinations().get(index);
+    }
+
     public void addDestination(Node... destination) {
         getDestinations().addAll(Arrays.asList(destination));
     }

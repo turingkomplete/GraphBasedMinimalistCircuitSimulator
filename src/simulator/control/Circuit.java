@@ -5,10 +5,7 @@ import simulator.gates.combinational.Explicit;
 import simulator.network.Link;
 import simulator.network.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Circuit implements Runnable {
     private List<Clock> clocks;
@@ -70,31 +67,80 @@ public class Circuit implements Runnable {
         }
     }
 
-    private Boolean depthFirstSearch(Node node) {
-        boolean loopDetected;
-        node.setVisited(true);
+//    private Boolean depthFirstSearch(Node node) {
+//        boolean loopDetected;
+//        node.setVisited(true);
+//
+//        for (Link link: node.getOutputs()) {
+//            for (int i = 0; i < link.getDestinations().size(); ++i) {
+//                if (link.getDestinations().get(i).isVisited()) {
+//                    if (!removed.containsKey(link)) {
+//                        removed.put(link, new ArrayList<>());
+//                    }
+//                    removed.get(link).add(link.getDestinations().get(i));
+//                    link.getDestinations().get(i).getInputs().remove(link);
+//                    link.getDestinations().remove(i);
+//                    node.setVisited(false);
+//                    return true;
+//                }
+//                loopDetected = depthFirstSearch(link.getDestinations().get(i));
+//                if (loopDetected) {
+//                    node.setVisited(false);
+//                    return true;
+//                }
+//            }
+//        }
+//        node.setVisited(false);
+//        return false;
+//    }
 
-        for (Link link: node.getOutputs()) {
-            for (int i = 0; i < link.getDestinations().size(); ++i) {
-                if (link.getDestinations().get(i).isVisited()) {
-                    if (!removed.containsKey(link)) {
-                        removed.put(link, new ArrayList<>());
-                    }
-                    removed.get(link).add(link.getDestinations().get(i));
-                    link.getDestinations().get(i).getInputs().remove(link);
-                    link.getDestinations().remove(i);
-                    node.setVisited(false);
-                    return true;
-                }
-                loopDetected = depthFirstSearch(link.getDestinations().get(i));
-                if (loopDetected) {
-                    node.setVisited(false);
-                    return true;
-                }
+    private Boolean depthFirstSearch(Node node) {
+        Stack<StackFrame> stack = new Stack<>();
+        stack.push(new StackFrame(node, 0, 0));
+        StackFrame.returnValue = false;
+
+        outer: while (stack.size() > 0) {
+            Node thisNode = stack.peek().node;
+
+            if (StackFrame.returnValue) {
+                thisNode.setVisited(false);
+                stack.pop();
+                continue;
             }
+
+            thisNode.setVisited(true);
+
+            while (stack.peek().i < thisNode.getOutputs().size()) {
+                while (stack.peek().j < thisNode.getOutput(stack.peek().i).getDestinations().size()) {
+                    if (thisNode.getOutput(stack.peek().i).getDestination(stack.peek().j).isVisited()) {
+                        if (!removed.containsKey(thisNode.getOutput(stack.peek().i))) {
+                            removed.put(thisNode.getOutput(stack.peek().i), new ArrayList<>());
+                        }
+
+                        removed.get(thisNode.getOutput(stack.peek().i)).add(thisNode.getOutput(stack.peek().i).getDestination(stack.peek().j));
+                        thisNode.getOutput(stack.peek().i).getDestination(stack.peek().j).getInputs().remove(thisNode.getOutput(stack.peek().i));
+                        thisNode.getOutput(stack.peek().i).getDestinations().remove(stack.peek().j);
+                        thisNode.setVisited(false);
+                        StackFrame.returnValue = true;
+                        stack.pop();
+                        continue outer;
+                    }
+
+                    stack.peek().j++;
+                    stack.push(new StackFrame(thisNode.getOutput(stack.peek().i).getDestination(--stack.peek().j), 0, 0));
+                    continue outer;
+                }
+
+                stack.peek().i++;
+            }
+
+            thisNode.setVisited(false);
+            stack.pop();
+            if (stack.size() > 0)
+                stack.peek().j++;
         }
-        node.setVisited(false);
-        return false;
+
+        return StackFrame.returnValue;
     }
 
     private void removeLoop() {
@@ -102,6 +148,7 @@ public class Circuit implements Runnable {
 
         while (loopDetected) {
             loopDetected = false;
+            StackFrame.returnValue = false;
             for (Node node: netList.get(0)) {
                 if (depthFirstSearch(node)) {
                     loopDetected = true;

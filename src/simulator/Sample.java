@@ -3,15 +3,8 @@
 package simulator;
 
 import simulator.control.Simulator;
-import simulator.gates.combinational.And;
-import simulator.gates.combinational.Memory;
 import simulator.gates.combinational.Not;
-import simulator.gates.combinational.Xor;
 import simulator.gates.sequential.Clock;
-import simulator.gates.sequential.flipflops.DFlipFlop;
-import simulator.network.Link;
-import simulator.wrapper.wrappers.FullAdder;
-import simulator.wrapper.wrappers.HalfAdder;
 import simulator.wrapper.wrappers.RealDFlipFlop;
 
 public class Sample {
