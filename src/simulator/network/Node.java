@@ -14,12 +14,14 @@ public abstract class Node implements Linkable{
     protected List<Link> outputs;
     protected String label;
     protected Boolean visited;
+    protected Boolean loop;
 
     public Node(String label, Link... links) {
         id = nextID++;
         inputs = new ArrayList<>();
         outputs = new ArrayList<>();
         visited = false;
+        loop = true;
 
         this.label = label;
         addInput(links);
@@ -95,6 +97,14 @@ public abstract class Node implements Linkable{
 
     public Boolean isVisited() {
         return visited;
+    }
+
+    public Boolean getLoop() {
+        return loop;
+    }
+
+    public void setLoop(Boolean loop) {
+        this.loop = loop;
     }
 
     @Override

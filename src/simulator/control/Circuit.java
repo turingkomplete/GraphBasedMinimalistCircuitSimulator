@@ -69,6 +69,10 @@ public class Circuit implements Runnable {
 
 //    private Boolean depthFirstSearch(Node node) {
 //        boolean loopDetected;
+//
+//        if (!node.getLoop())
+//            return false;
+//
 //        node.setVisited(true);
 //
 //        for (Link link: node.getOutputs()) {
@@ -90,6 +94,8 @@ public class Circuit implements Runnable {
 //                }
 //            }
 //        }
+//
+//        node.setLoop(false);
 //        node.setVisited(false);
 //        return false;
 //    }
@@ -102,9 +108,11 @@ public class Circuit implements Runnable {
         outer: while (stack.size() > 0) {
             Node thisNode = stack.peek().node;
 
-            if (StackFrame.returnValue) {
+            if (StackFrame.returnValue || !thisNode.getLoop()) {
                 thisNode.setVisited(false);
                 stack.pop();
+                if (stack.size() > 0)
+                    stack.peek().j++;
                 continue;
             }
 
@@ -135,6 +143,7 @@ public class Circuit implements Runnable {
             }
 
             thisNode.setVisited(false);
+            thisNode.setLoop(false);
             stack.pop();
             if (stack.size() > 0)
                 stack.peek().j++;
