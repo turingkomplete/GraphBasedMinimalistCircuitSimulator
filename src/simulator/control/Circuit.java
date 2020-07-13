@@ -4,16 +4,19 @@ import simulator.gates.sequential.Clock;
 import simulator.gates.combinational.Explicit;
 import simulator.network.Link;
 import simulator.network.Node;
+import simulator.wrapper.DataStream;
 
 import java.util.*;
 
 public class Circuit implements Runnable {
+    private List<DataStream> dataStreams;
     private List<Clock> clocks;
     private List<List<Node>> netList;
     private Map<Link, List<Node>> removed;
     private Thread thread;
 
     public Circuit() {
+        dataStreams = new ArrayList<DataStream>();
         removed = new HashMap<>();
         netList = new ArrayList<>();
         netList.add(new ArrayList<>());
@@ -22,6 +25,10 @@ public class Circuit implements Runnable {
     }
 
     public void addNode(Node node) {
+        if(node instanceof DataStream) {
+            dataStreams.add((DataStream) node);
+        }
+
         if(node instanceof Explicit || node instanceof Clock) {
             netList.get(0).add(node);
         }
@@ -32,8 +39,9 @@ public class Circuit implements Runnable {
     }
 
     public void startCircuit(String mode) {
+        removeDataStream();
         removeLoop();
-        if (mode.equals("REAL") || mode.equals("Real") || mode.equals("real")) {
+        if (mode.toLowerCase().equals("real")) {
             realModeInitializeNetList();
         } else {
             initializeNetList();
@@ -45,12 +53,37 @@ public class Circuit implements Runnable {
     }
 
     public void startCircuit() {
+        removeDataStream();
         removeLoop();
         initializeNetList();
         addLoop();
         startClocks();
         Simulator.debugger.startDebugger();
         thread.start();
+    }
+
+    private void removeDataStream() {
+        for (int i = 0; i < dataStreams.size(); ++i) {
+            DataStream dataStream = dataStreams.get(i);
+            for (int j = 0; j < dataStream.getOutputs().size(); ++j) {
+                Link input = dataStream.getInput(j);
+                Link output = dataStream.getOutput(j);
+                Node source = input.getSource();
+                int sourceIndex = source.getOutputs().indexOf(input);
+                if (output.getDestinations().isEmpty()) {
+                    source.getOutput(sourceIndex).getDestinations().remove(dataStream);
+                } else {
+                    for (int k = 0; k < output.getDestinations().size(); ++k) {
+                        Node destination = output.getDestination(k);
+                        int destinationIndex = destination.getInputs().indexOf(output);
+                        source.getOutput(sourceIndex).getDestinations().remove(dataStream);
+                        source.getOutput(sourceIndex).getDestinations().add(destination);
+                        destination.getInputs().set(destinationIndex, source.getOutput(sourceIndex));
+                    }
+                }
+                dataStream.setOutput(j, source.getOutput(sourceIndex));
+            }
+        }
     }
 
     private void startClocks() {

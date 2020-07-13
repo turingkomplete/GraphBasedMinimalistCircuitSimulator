@@ -12,11 +12,13 @@ public class DFlipFlop extends Node implements FlipFlop {
         edgeFlag = true;
         memory = false;
         addOutputLink(false);
+        addOutputLink(true);
     }
 
     @Override
     public void setOutput() {
         outputs.get(0).setSignal(memory);
+        outputs.get(1).setSignal(!memory);
     }
 
     @Override
@@ -27,8 +29,13 @@ public class DFlipFlop extends Node implements FlipFlop {
     @Override
     public void evaluate() {
         if(getInput(0).getSignal() && edgeFlag) {
-            setOutput();
-            loadMemory();
+            if (getInput(1).getSource() instanceof FlipFlop) {
+                setOutput();
+                loadMemory();
+            } else {
+                loadMemory();
+                setOutput();
+            }
             edgeFlag = false;
         } else if(!getInput(0).getSignal() && !edgeFlag) {
             edgeFlag = true;

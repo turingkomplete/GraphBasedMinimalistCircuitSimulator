@@ -5,6 +5,7 @@ package simulator;
 import simulator.control.Simulator;
 import simulator.gates.combinational.Not;
 import simulator.gates.sequential.Clock;
+import simulator.gates.sequential.flipflops.DFlipFlop;
 import simulator.wrapper.wrappers.RealDFlipFlop;
 
 public class Sample {
@@ -12,10 +13,10 @@ public class Sample {
         //sample circuit
         Clock clock = new Clock("CLOCK", 1000);
 
-        RealDFlipFlop d1 = new RealDFlipFlop("D1", "2X2", clock.getOutput(0));
-        RealDFlipFlop d2 = new RealDFlipFlop("D2", "2X2", clock.getOutput(0));
-        RealDFlipFlop d3 = new RealDFlipFlop("D3", "2X2", clock.getOutput(0));
-        RealDFlipFlop d4 = new RealDFlipFlop("D4", "2X2", clock.getOutput(0));
+        DFlipFlop d1 = new DFlipFlop("D1", clock.getOutput(0));
+        DFlipFlop d2 = new DFlipFlop("D2", clock.getOutput(0));
+        DFlipFlop d3 = new DFlipFlop("D3", clock.getOutput(0));
+        DFlipFlop d4 = new DFlipFlop("D4", clock.getOutput(0));
 
         Not n1 = new Not("NOT", d4.getOutput(0));
 
@@ -26,7 +27,7 @@ public class Sample {
         d4.addInput(d3.getOutput(0));
 
         Simulator.debugger.addTrackItem(clock, d1, d2, d3, d4);
-        Simulator.debugger.setDelay(500);
+        Simulator.debugger.setDelay(200);
 
         Simulator.circuit.startCircuit();
     }
