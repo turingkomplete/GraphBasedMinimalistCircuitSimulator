@@ -23,7 +23,7 @@ public abstract class Wrapper implements Linkable {
 
         this.label = label;
 
-        String pattern = "(\\d+)(x|X)(\\d+)";
+        String pattern = "(\\d+)([xX])(\\d+)";
         Pattern r = Pattern.compile(pattern);
         Matcher m = r.matcher(stream);
 

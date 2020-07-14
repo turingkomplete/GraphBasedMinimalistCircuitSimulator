@@ -16,7 +16,7 @@ public class Circuit implements Runnable {
     private Thread thread;
 
     public Circuit() {
-        dataStreams = new ArrayList<DataStream>();
+        dataStreams = new ArrayList<>();
         removed = new HashMap<>();
         netList = new ArrayList<>();
         netList.add(new ArrayList<>());
@@ -63,8 +63,18 @@ public class Circuit implements Runnable {
     }
 
     private void removeDataStream() {
-        for (int i = 0; i < dataStreams.size(); ++i) {
-            DataStream dataStream = dataStreams.get(i);
+        int m = 0;
+        outer: while (!dataStreams.isEmpty()) {
+            if (m >= dataStreams.size()) {
+                m = 0;
+            }
+            DataStream dataStream = dataStreams.get(m);
+            for (int l = 0; l < dataStream.getInputs().size(); ++l) {
+                if (dataStream.getInput(l).getSource() instanceof DataStream) {
+                    m ++;
+                    continue outer;
+                }
+            }
             for (int j = 0; j < dataStream.getOutputs().size(); ++j) {
                 Link input = dataStream.getInput(j);
                 Link output = dataStream.getOutput(j);
@@ -83,6 +93,7 @@ public class Circuit implements Runnable {
                 }
                 dataStream.setOutput(j, source.getOutput(sourceIndex));
             }
+            dataStreams.remove(dataStream);
         }
     }
 
