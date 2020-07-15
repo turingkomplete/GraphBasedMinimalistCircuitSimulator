@@ -3,24 +3,17 @@
 package simulator;
 
 import simulator.control.Simulator;
-import simulator.gates.combinational.Not;
-import simulator.gates.sequential.Clock;
-import simulator.gates.sequential.flipflops.DFlipFlop;
-import simulator.wrapper.wrappers.FullAdder;
-import simulator.wrapper.wrappers.RealDFlipFlop;
+import simulator.wrapper.wrappers.*;
 
 public class Sample {
     public static void main(String[] args) {
         //sample circuit
-        FullAdder fullAdder1 = new FullAdder("FULLADDER1", "3X2", Simulator.falseLogic,
-                Simulator.trueLogic);
-        FullAdder fullAdder2 = new FullAdder("FULLADDER2", "3X2", Simulator.falseLogic,
-                Simulator.falseLogic, fullAdder1.getOutput(1));
+        Adder adder = new Adder("ADDER", "10X6",
+                Simulator.falseLogic, Simulator.trueLogic, Simulator.trueLogic, Simulator.falseLogic, Simulator.trueLogic,
+                Simulator.falseLogic, Simulator.trueLogic, Simulator.falseLogic, Simulator.falseLogic, Simulator.trueLogic);
 
-        fullAdder1.addInput(fullAdder2.getOutput(1));
-
-        Simulator.debugger.addTrackItem(fullAdder1, fullAdder2);
-        Simulator.debugger.setDelay(500);
+        Simulator.debugger.addTrackItem(adder);
+        Simulator.debugger.setDelay(200);
         Simulator.circuit.startCircuit();
     }
 }

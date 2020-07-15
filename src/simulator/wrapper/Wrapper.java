@@ -92,6 +92,14 @@ public abstract class Wrapper implements Linkable {
         return label;
     }
 
+    public int getInputSize() {
+        return inputSize;
+    }
+
+    public int getOutputSize() {
+        return outputSize;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
