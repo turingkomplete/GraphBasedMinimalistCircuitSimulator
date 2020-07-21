@@ -15,6 +15,7 @@ public abstract class Node implements Linkable{
     protected String label;
     protected Boolean visited;
     protected Boolean loop;
+    protected Boolean latch;
 
     public Node(String label, Link... links) {
         id = nextID++;
@@ -22,6 +23,7 @@ public abstract class Node implements Linkable{
         outputs = new ArrayList<>();
         visited = false;
         loop = true;
+        latch = false;
 
         this.label = label;
         addInput(links);
@@ -105,6 +107,14 @@ public abstract class Node implements Linkable{
 
     public void setLoop(Boolean loop) {
         this.loop = loop;
+    }
+
+    public Boolean getLatch() {
+        return latch;
+    }
+
+    public void setLatch(Boolean latch) {
+        this.latch = latch;
     }
 
     @Override

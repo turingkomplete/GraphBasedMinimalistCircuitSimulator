@@ -4,8 +4,8 @@ import simulator.gates.combinational.Nand;
 import simulator.network.Link;
 import simulator.wrapper.Wrapper;
 
-public class RealDFlipFlop extends Wrapper {
-    public RealDFlipFlop(String label, String stream, Link... links) {
+public class DFlipFlop extends Wrapper {
+    public DFlipFlop(String label, String stream, Link... links) {
         super(label, stream, links);
     }
 
@@ -17,6 +17,13 @@ public class RealDFlipFlop extends Wrapper {
         Nand n4 = new Nand("NAND4");
         Nand n5 = new Nand("NAND5");
         Nand n6 = new Nand("NAND6");
+
+        n1.setLatch(true);
+        n2.setLatch(true);
+        n3.setLatch(true);
+        n4.setLatch(true);
+        n5.setLatch(true);
+        n6.setLatch(true);
 
         n1.addInput(n4.getOutput(0), n2.getOutput(0));
         n2.addInput(getInput(0), n1.getOutput(0));

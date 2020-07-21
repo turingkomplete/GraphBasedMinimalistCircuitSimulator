@@ -38,20 +38,6 @@ public class Circuit implements Runnable {
         }
     }
 
-    public void startCircuit(String mode) {
-        removeDataStream();
-        removeLoop();
-        if (mode.toLowerCase().equals("real")) {
-            realModeInitializeNetList();
-        } else {
-            initializeNetList();
-        }
-        addLoop();
-        startClocks();
-        Simulator.debugger.startDebugger();
-        thread.start();
-    }
-
     public void startCircuit() {
         removeDataStream();
         removeLoop();
@@ -110,39 +96,6 @@ public class Circuit implements Runnable {
             }
         }
     }
-
-//    private Boolean depthFirstSearch(Node node) {
-//        boolean loopDetected;
-//
-//        if (!node.getLoop())
-//            return false;
-//
-//        node.setVisited(true);
-//
-//        for (Link link: node.getOutputs()) {
-//            for (int i = 0; i < link.getDestinations().size(); ++i) {
-//                if (link.getDestinations().get(i).isVisited()) {
-//                    if (!removed.containsKey(link)) {
-//                        removed.put(link, new ArrayList<>());
-//                    }
-//                    removed.get(link).add(link.getDestinations().get(i));
-//                    link.getDestinations().get(i).getInputs().remove(link);
-//                    link.getDestinations().remove(i);
-//                    node.setVisited(false);
-//                    return true;
-//                }
-//                loopDetected = depthFirstSearch(link.getDestinations().get(i));
-//                if (loopDetected) {
-//                    node.setVisited(false);
-//                    return true;
-//                }
-//            }
-//        }
-//
-//        node.setLoop(false);
-//        node.setVisited(false);
-//        return false;
-//    }
 
     private Boolean depthFirstSearch(Node node) {
         Stack<StackFrame> stack = new Stack<>();
@@ -235,7 +188,7 @@ public class Circuit implements Runnable {
                         }
                     }
 
-                    if (flag) {
+                    if (flag || innerNode.getLatch()) {
                         if (netList.size() < level + 2) {
                             netList.add(new ArrayList<>());
                         }
@@ -243,29 +196,6 @@ public class Circuit implements Runnable {
                         if (!netList.get(level + 1).contains(innerNode)) {
                             netList.get(level + 1).add(innerNode);
                         }
-                    }
-                }
-            }
-        }
-    }
-
-    private void realModeInitializeNetList() {
-        int level = 0;
-        while (netList.size() >= level + 1) {
-            realModeInitializeLevel(level++);
-        }
-    }
-
-    private void realModeInitializeLevel(int level) {
-        for (Node node: netList.get(level)) {
-            for (Link link: node.getOutputs()) {
-                for (Node innerNode : link.getDestinations()) {
-                    if (netList.size() < level + 2) {
-                        netList.add(new ArrayList<>());
-                    }
-
-                    if (!netList.get(level + 1).contains(innerNode)) {
-                        netList.get(level + 1).add(innerNode);
                     }
                 }
             }
@@ -288,3 +218,59 @@ public class Circuit implements Runnable {
         }
     }
 }
+
+//    private void realModeInitializeNetList() {
+//        int level = 0;
+//        while (netList.size() >= level + 1) {
+//            realModeInitializeLevel(level++);
+//        }
+//    }
+//
+//    private void realModeInitializeLevel(int level) {
+//        for (Node node: netList.get(level)) {
+//            for (Link link: node.getOutputs()) {
+//                for (Node innerNode : link.getDestinations()) {
+//                    if (netList.size() < level + 2) {
+//                        netList.add(new ArrayList<>());
+//                    }
+//
+//                    if (!netList.get(level + 1).contains(innerNode)) {
+//                        netList.get(level + 1).add(innerNode);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+//    private Boolean depthFirstSearch(Node node) {
+//        boolean loopDetected;
+//
+//        if (!node.getLoop())
+//            return false;
+//
+//        node.setVisited(true);
+//
+//        for (Link link: node.getOutputs()) {
+//            for (int i = 0; i < link.getDestinations().size(); ++i) {
+//                if (link.getDestinations().get(i).isVisited()) {
+//                    if (!removed.containsKey(link)) {
+//                        removed.put(link, new ArrayList<>());
+//                    }
+//                    removed.get(link).add(link.getDestinations().get(i));
+//                    link.getDestinations().get(i).getInputs().remove(link);
+//                    link.getDestinations().remove(i);
+//                    node.setVisited(false);
+//                    return true;
+//                }
+//                loopDetected = depthFirstSearch(link.getDestinations().get(i));
+//                if (loopDetected) {
+//                    node.setVisited(false);
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        node.setLoop(false);
+//        node.setVisited(false);
+//        return false;
+//    }
