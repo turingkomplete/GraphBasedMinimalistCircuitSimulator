@@ -3,6 +3,13 @@ package simulator.gates.combinational;
 import simulator.network.Link;
 import simulator.network.Node;
 
+/* a bit-addressable memory with 4byte-word with 16bit address bus
+ *   in:
+ *       0 : write signal
+ *       1 -> 16: address
+ *       17 -> 48: data in
+ *   out:
+ *       0 -> 31 : data out */
 public class Memory extends Node {
     private Boolean[] memory;
 
