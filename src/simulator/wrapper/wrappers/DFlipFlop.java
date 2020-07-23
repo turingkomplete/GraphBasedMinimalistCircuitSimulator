@@ -4,6 +4,13 @@ import simulator.gates.combinational.Nand;
 import simulator.network.Link;
 import simulator.wrapper.Wrapper;
 
+/*a data flip-flop
+ * in:
+ *   0 : clock signal
+ *   1 : data signal
+ * out:
+ *   0 : q
+ *   1 : q-bar */
 public class DFlipFlop extends Wrapper {
     public DFlipFlop(String label, String stream, Link... links) {
         super(label, stream, links);

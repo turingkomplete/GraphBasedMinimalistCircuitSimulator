@@ -6,6 +6,13 @@ import simulator.gates.combinational.Xor;
 import simulator.network.Link;
 import simulator.wrapper.Wrapper;
 
+/*a half adder
+ * in:
+ *   0 : first bit
+ *   1 : second bit
+ * out:
+ *   0: carry
+ *   1: summation */
 public class HalfAdder extends Wrapper {
     public HalfAdder(String label, String stream, Link... links) {
         super(label, stream, links);

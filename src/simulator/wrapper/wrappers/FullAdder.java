@@ -4,6 +4,14 @@ import simulator.gates.combinational.Or;
 import simulator.network.Link;
 import simulator.wrapper.Wrapper;
 
+/*a half adder
+ * in:
+ *   0 : first bit
+ *   1 : second bit
+ *   2 : third bit
+ * out:
+ *   0 : carry
+ *   1 : summation */
 public class FullAdder extends Wrapper {
     public FullAdder(String label, String stream, Link... links) {
         super(label, stream, links);
