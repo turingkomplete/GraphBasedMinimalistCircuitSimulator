@@ -3,19 +3,19 @@ package simulator.gates.combinational;
 import simulator.network.Link;
 import simulator.network.Node;
 
-/* a bit-addressable memory with 4byte-word with 16bit address bus
+/* a byte-addressable memory with 4byte-word with 16bit address bus
  *   in:
  *       0 : write signal
  *       1 -> 16: address
  *       17 -> 48: data in
  *   out:
  *       0 -> 31 : data out */
-public class Memory extends Node {
-    private Boolean[] memory;
+public class ByteMemory extends Node {
+    private Boolean[][] memory;
 
-    public Memory(String label, Link... links) {
+    public ByteMemory(String label, Link... links) {
         super(label, links);
-        memory = new Boolean[65536];
+        memory = new Boolean[65536][8];
         for (int i = 0; i < 32; ++i) {
             addOutputLink(false);
         }
@@ -34,14 +34,22 @@ public class Memory extends Node {
     }
 
     private void memoryWrite() {
-        for(int i = 17; i < 49; ++i) {
-            memory[address() + i - 17] = getInput(i).getSignal();
+        int address = address();
+
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                memory[address + i][j] = getInput(i * 8 + j + 17).getSignal();
+            }
         }
     }
 
     private void memoryRead(){
-        for (int i = 0; i < 32; ++i) {
-            getOutput(i).setSignal(memory[address() + i]);
+        int address = address();
+
+        for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                getOutput(i * 8 + j).setSignal(memory[address + i][j]);
+            }
         }
     }
 
@@ -52,11 +60,11 @@ public class Memory extends Node {
         memoryRead();
     }
 
-    public void setMemory(Boolean[] memory) {
+    public void setMemory(Boolean[][] memory) {
         this.memory = memory;
     }
 
-    public Boolean[] getMemory() {
+    public Boolean[][] getMemory() {
         return memory;
     }
 }
