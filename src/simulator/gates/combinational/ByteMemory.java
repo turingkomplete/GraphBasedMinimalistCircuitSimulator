@@ -30,6 +30,8 @@ public class ByteMemory extends Node {
                 }
             }
         }
+
+        temp -= temp % 4;
         return temp;
     }
 
