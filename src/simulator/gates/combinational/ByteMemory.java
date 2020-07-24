@@ -31,7 +31,6 @@ public class ByteMemory extends Node {
             }
         }
 
-        temp -= temp % 4;
         return temp;
     }
 
@@ -39,8 +38,10 @@ public class ByteMemory extends Node {
         int address = address();
 
         for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                memory[address + i][j] = getInput(i * 8 + j + 17).getSignal();
+            if (address + i <= 65535) {
+                for (int j = 0; j < 8; ++j) {
+                    memory[address + i][j] = getInput(i * 8 + j + 17).getSignal();
+                }
             }
         }
     }
@@ -49,8 +50,10 @@ public class ByteMemory extends Node {
         int address = address();
 
         for (int i = 0; i < 4; ++i) {
-            for (int j = 0; j < 8; ++j) {
-                getOutput(i * 8 + j).setSignal(memory[address + i][j]);
+            if (address + i <= 65535) {
+                for (int j = 0; j < 8; ++j) {
+                    getOutput(i * 8 + j).setSignal(memory[address + i][j]);
+                }
             }
         }
     }

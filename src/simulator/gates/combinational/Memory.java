@@ -34,14 +34,22 @@ public class Memory extends Node {
     }
 
     private void memoryWrite() {
+        int address = address();
+
         for(int i = 17; i < 49; ++i) {
-            memory[address() + i - 17] = getInput(i).getSignal();
+            if (address + i - 17 <= 65535) {
+                memory[address + i - 17] = getInput(i).getSignal();
+            }
         }
     }
 
     private void memoryRead(){
+        int address = address();
+
         for (int i = 0; i < 32; ++i) {
-            getOutput(i).setSignal(memory[address() + i]);
+            if (address + i <= 65535) {
+                getOutput(i).setSignal(memory[address + i]);
+            }
         }
     }
 
