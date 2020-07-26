@@ -1,5 +1,6 @@
 package simulator.control;
 
+import simulator.gates.sequential.BigClock;
 import simulator.gates.sequential.Clock;
 import simulator.gates.combinational.Explicit;
 import simulator.network.Link;
@@ -14,6 +15,7 @@ public class Circuit implements Runnable {
     private List<List<Node>> netList;
     private Map<Link, List<Node>> removed;
     private Thread thread;
+    private List<BigClock> bigClocks;
 
     public Circuit() {
         dataStreams = new ArrayList<>();
@@ -22,6 +24,7 @@ public class Circuit implements Runnable {
         netList.add(new ArrayList<>());
         clocks = new ArrayList<>();
         thread = new Thread(this);
+        bigClocks = new ArrayList<>();
     }
 
     public void addNode(Node node) {
@@ -29,12 +32,16 @@ public class Circuit implements Runnable {
             dataStreams.add((DataStream) node);
         }
 
-        if(node instanceof Explicit || node instanceof Clock) {
+        if(node instanceof Explicit || node instanceof Clock || node instanceof BigClock) {
             netList.get(0).add(node);
         }
 
         if (node instanceof Clock) {
             clocks.add((Clock) node);
+        }
+
+        if (node instanceof BigClock) {
+            bigClocks.add((BigClock) node);
         }
     }
 
@@ -210,9 +217,16 @@ public class Circuit implements Runnable {
         }
     }
 
+    private void toggleBigClocks() {
+        for (BigClock bigClock : bigClocks) {
+            bigClock.toggle();
+        }
+    }
+
     @Override
     public void run() {
         while (true) {
+            toggleBigClocks();
             evaluateNetList();
             Simulator.debugger.run();
         }

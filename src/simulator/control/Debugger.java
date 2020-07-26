@@ -51,14 +51,17 @@ public class Debugger {
     public void run() {
         Date currentTime = new Date();
         long spent = startTime.getTime() - currentTime.getTime();
-
-        if ((spent / delay) % 2 == 0 && edgeFlag) {
-            if (!trackList.isEmpty()) {
-                printState();
+        if (delay != 0) {
+            if ((spent / delay) % 2 == 0 && edgeFlag) {
+                if (!trackList.isEmpty()) {
+                    printState();
+                }
+                edgeFlag = false;
+            } else if ((spent / delay) % 2 != 0 && !edgeFlag) {
+                edgeFlag = true;
             }
-            edgeFlag = false;
-        } else if ((spent / delay) % 2 != 0 && !edgeFlag) {
-            edgeFlag = true;
+        } else {
+            printState();
         }
     }
 }
