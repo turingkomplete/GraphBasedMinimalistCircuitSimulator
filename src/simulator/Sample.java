@@ -15,7 +15,7 @@ import java.awt.geom.AffineTransform;
 public class Sample {
     public static void main(String[] args) {
         //sample circuit
-        Clock clock = new Clock("CLOCK", 1000);
+        BigClock clock = new BigClock("CLOCK");
         DFlipFlop shoift0 = new DFlipFlop("SHIFT0", "2X2", clock.getOutput(0), Simulator.falseLogic);
         DFlipFlop shoift1 = new DFlipFlop("SHIFT1", "2X2", clock.getOutput(0), shoift0.getOutput(0));
 
@@ -83,7 +83,7 @@ public class Sample {
         }
 
         Simulator.debugger.addTrackItem(clock, mem);
-        Simulator.debugger.setDelay(200);
-        Simulator.circuit.startCircuit();
+        Simulator.debugger.setDelay(0);
+        Simulator.circuit.startCircuit(10);
     }
 }

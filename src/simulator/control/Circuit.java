@@ -16,6 +16,7 @@ public class Circuit implements Runnable {
     private Map<Link, List<Node>> removed;
     private Thread thread;
     private List<BigClock> bigClocks;
+    private int clockCount;
 
     public Circuit() {
         dataStreams = new ArrayList<>();
@@ -25,6 +26,7 @@ public class Circuit implements Runnable {
         clocks = new ArrayList<>();
         thread = new Thread(this);
         bigClocks = new ArrayList<>();
+        clockCount = -1;
     }
 
     public void addNode(Node node) {
@@ -53,6 +55,17 @@ public class Circuit implements Runnable {
         startClocks();
         Simulator.debugger.startDebugger();
         thread.start();
+    }
+
+    public void startCircuit(int clockCount) {
+        removeDataStream();
+        removeLoop();
+        initializeNetList();
+        addLoop();
+        startClocks();
+        Simulator.debugger.startDebugger();
+        thread.start();
+        this.clockCount = clockCount * 2;
     }
 
     private void removeDataStream() {
@@ -242,10 +255,12 @@ public class Circuit implements Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        int count = 0;
+        while (count < clockCount || clockCount == -1) {
             toggleBigClocks();
             evaluateNetList();
             Simulator.debugger.run();
+            count ++;
         }
     }
 }
