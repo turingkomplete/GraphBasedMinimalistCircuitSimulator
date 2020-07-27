@@ -188,14 +188,31 @@ public class Circuit implements Runnable {
         for (Node node: netList.get(level)) {
             for (Link link: node.getOutputs()) {
                 for (Node innerNode : link.getDestinations()) {
-                    boolean flag = true;
+                    if (!innerNode.getLatch() && !node.getLatchValidity()) {
+                        break;
+                    }
+
+                    if (innerNode.getLatch()) {
+                        boolean latchValid = true;
+                        for (Link inputLink : innerNode.getInputs()) {
+                            if (!inputLink.getSource().getLatchValidity()) {
+                                latchValid = false;
+                                break;
+                            }
+                        }
+
+                        innerNode.setLatchValidity(latchValid);
+                    }
+
+                    boolean valid = true;
                     for (Link innerLink : innerNode.getInputs()) {
                         if (!innerLink.isValid()) {
-                            flag = false;
+                            valid = false;
+                            break;
                         }
                     }
 
-                    if (flag || innerNode.getLatch()) {
+                    if (valid || innerNode.getLatch()) {
                         if (netList.size() < level + 2) {
                             netList.add(new ArrayList<>());
                         }
