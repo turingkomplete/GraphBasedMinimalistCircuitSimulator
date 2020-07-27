@@ -201,21 +201,21 @@ public class Circuit implements Runnable {
         for (Node node: netList.get(level)) {
             for (Link link: node.getOutputs()) {
                 for (Node innerNode : link.getDestinations()) {
-                    if (!innerNode.getLatch() && !node.getLatchValidity()) {
-                        break;
-                    }
+//                    if (!innerNode.getLatch() && !node.getLatchValidity()) {
+//                        break;
+//                    }
 
-                    if (innerNode.getLatch()) {
-                        boolean latchValid = true;
-                        for (Link inputLink : innerNode.getInputs()) {
-                            if (!inputLink.getSource().getLatchValidity()) {
-                                latchValid = false;
-                                break;
-                            }
-                        }
-
-                        innerNode.setLatchValidity(latchValid);
-                    }
+//                    if (innerNode.getLatch()) {
+//                        boolean latchValid = true;
+//                        for (Link inputLink : innerNode.getInputs()) {
+//                            if (!inputLink.getSource().getLatchValidity()) {
+//                                latchValid = false;
+//                                break;
+//                            }
+//                        }
+//
+//                        innerNode.setLatchValidity(latchValid);
+//                    }
 
                     boolean valid = true;
                     for (Link innerLink : innerNode.getInputs()) {
