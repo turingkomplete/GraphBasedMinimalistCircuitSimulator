@@ -3,6 +3,8 @@ package simulator.gates.combinational;
 import simulator.network.Link;
 import simulator.network.Node;
 
+import java.util.List;
+
 /* a bit-addressable memory with 4byte-word with 16bit address bus
  *   in:
  *       0 : write signal
@@ -12,6 +14,7 @@ import simulator.network.Node;
  *       0 -> 31 : data out */
 public class Memory extends Node {
     private Boolean[] memory;
+    private List<Link> memIn;
 
     public Memory(String label, Link... links) {
         super(label, links);
@@ -51,6 +54,15 @@ public class Memory extends Node {
                 getOutput(i).setSignal(memory[address + i]);
             }
         }
+    }
+
+    public List<Link> getMemIn() {
+        return memIn;
+    }
+
+    @Override
+    public Link getInput(int index) {
+        return memIn.get(index);
     }
 
     @Override
