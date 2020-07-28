@@ -3,6 +3,7 @@ package simulator.gates.combinational;
 import simulator.network.Link;
 import simulator.network.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* a bit-addressable memory with 4byte-word with 16bit address bus
@@ -18,6 +19,7 @@ public class Memory extends Node {
 
     public Memory(String label, Link... links) {
         super(label, links);
+        memIn = new ArrayList<>();
         memory = new Boolean[65536];
         for (int i = 0; i < 32; ++i) {
             addOutputLink(false);
